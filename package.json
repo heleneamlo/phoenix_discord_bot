@@ -9,7 +9,7 @@
   "author": "phoenix lan",
   "license": "ISC",
   "dependencies": {
-    "@phoenixlan/phoenix.js": "^2.29.0",
+    "@phoenixlan/phoenix.js": "^2.30.0",
     "amqplib": "^0.10.3",
     "discord.js": "^14.12.1",
     "dotenv": "^16.3.1"
