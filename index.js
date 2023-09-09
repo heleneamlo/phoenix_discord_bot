@@ -240,9 +240,15 @@ phoenixClient.on("messageCreate", async (message) => {
                         name: "!roles",
                         value: "Oppdaterer roller.",
                     }, {
-                        name: "!liam",
-                        value: "Viser den nåværende tiden i Japan",
-                    })
+                        name: '!roles',
+                        value: 'Oppdaterer roller.',
+                    }, {
+                        name: '!liam',
+                        value: 'Viser den nåværende tiden i Japan',
+                    }, {
+                        name: 'REDACTED',
+                        value: 'REDACTED',
+                    }, )
                     .setTimestamp()
                     .setFooter({
                         text: "Phoenix bot !help",
@@ -295,9 +301,6 @@ phoenixClient.on("messageCreate", async (message) => {
                 });
                 message.reply("Liam bor i Japan som ligger " + 7 + " timer før Norge, tiden i japan er nå: " + liam_tid);
                 break;
-            case 'liam':
-                let liam_tid = new Date().toLocaleTimeString("nb-NO", { timeZone: "JST"})
-                message.reply("Liam bor i Japan som ligger 8 timer før Norge, tiden i japan er nå: " + liam_tid)
             default:
                 message.reply("Dette var en kommando som ikke funket, se om du skrev den riktig eller skriv !help for å se alle kommandoer");
                 break;
