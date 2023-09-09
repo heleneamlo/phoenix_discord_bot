@@ -111,6 +111,9 @@ phoenixClient.on('messageCreate', async (message) => {
                         name: '!roles',
                         value: 'Oppdaterer roller.',
                     }, {
+                        name: '!liam',
+                        value: 'Viser den nåværende tiden i Japan',
+                    }, {
                         name: 'REDACTED',
                         value: 'REDACTED',
                     }, )
