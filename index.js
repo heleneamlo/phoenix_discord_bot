@@ -120,6 +120,7 @@ phoenixClient.on('messageCreate', async (message) => {
             case 'liam':
                 let liam_tid = new Date().toLocaleTimeString("nb-NO", { timeZone: "JST"})
                 message.reply("Liam bor i Japan som ligger 8 timer før Norge, tiden i japan er nå: " + liam_tid)
+                break;
             default:
                 message.reply('Dette var en kommando som ikke funket, se om du skrev den riktig eller skriv !help for å se alle kommandoer');
                 break;
