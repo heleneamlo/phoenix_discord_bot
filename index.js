@@ -18,12 +18,14 @@ const {
 } = require('discord.js');
 
 phoenix.init("https://api.test.phoenixlan.no");
-phoenix.User.Oauth.setAuthState("eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJhZG1pbiIsInRpY2tldF93aG9sZXNhbGUiLCJjaGllZjo0ZTUxYzdhYS0xYjJmLTQzMzUtOWEzNC1kMDZmYTU0MjcwMDYiLCJtZW1iZXIiLCJ1c2VyOmZlNmRkZjU5LTc3NWQtNDI1Yi1hNjBmLTc5YTU1ZTdiZDE1YyIsImNoaWVmIiwidGlja2V0X2J5cGFzc190aWNrZXRzYWxlX3N0YXJ0X3Jlc3RyaWN0aW9uIl0sImZsYWciOiJQSE9FTklYe0pXVFNfQVJFX0FXRVNPTUV9Iiwic3ViIjoiZmU2ZGRmNTktNzc1ZC00MjViLWE2MGYtNzlhNTVlN2JkMTVjIiwiaWF0IjoxNjk0Nzk4NTQ0LCJleHAiOjE2OTQ4MDIxNDR9.Y1fx1ndk9iDVjEPC9vDt4UZxz7V1ar4sqALxXD_aW0JHojQ6ROFsdbNquIt35MWPCmvbjHGZkWNNcmRfWbdHNQ", "saphamcWOBXgsVaOuiizRsmQvsgiUFSLhBVeluMW");
+//change this
+phoenix.User.Oauth.setAuthState("", "");
 const timeBeforeNextEventRemove = 2;
 
 
 const DISCORD_TOKEN = process.env.BOT_TOKEN;
-amqp.connect('amqp://phoenix:testing@127.0.0.1:5672', function (error0, connection) {
+//change this
+amqp.connect('amqp://', function (error0, connection) {
     if (error0) {
         throw error0;
     }
@@ -31,7 +33,8 @@ amqp.connect('amqp://phoenix:testing@127.0.0.1:5672', function (error0, connecti
         if (error1) {
             throw error1;
         }
-        let queue = 'position_changes';
+        //change this
+        let queue = '';
 
 
         channel.assertQueue(queue, {
@@ -114,9 +117,8 @@ async function removeAllRoles() {
 }
 
 async function updateRoles() {
-    //ENDRE TIL SERVERID
+    //change this
     const guild = phoenixClient.guilds.cache.get("1057285699050680441");
-    //ENDRE TIL SERVERID
     let crews = await Promise.all((await phoenix.Crew.getCrews()));
     crews.forEach(async (Crew) => {
         let allCrews = await phoenix.Crew.getCrew(Crew.uuid);
@@ -206,6 +208,7 @@ phoenixClient.on('messageCreate', async (message) => {
                 });
                 break;
             case 'roles':
+                //change this
                 const guild = phoenixClient.guilds.cache.get("1057285699050680441");
                 let role = message.member.roles.cache.find(role => role.name === "Administrasjon")
                 if(role){
