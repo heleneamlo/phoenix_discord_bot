@@ -269,11 +269,10 @@ phoenixClient.on('messageCreate', async (message) => {
                     await removeAllRoles();
                     await updateRoles();
                     message.reply('roller oppdatert');
-                    break;
                 } else {
                         message.reply('du har ikke tillatelse til å gjøre dette, kontakt administrasjonen.');
-                        break;
                 };
+                break;
             case 'liam':
 <<<<<<< HEAD
 =======
