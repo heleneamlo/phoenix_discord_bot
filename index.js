@@ -302,6 +302,9 @@ phoenixClient.on("messageCreate", async (message) => {
     }
 });
 
+<<<<<<< HEAD
 
 //logging in to the discord bot api with the bot token
+=======
+>>>>>>> 0fb5340 (wttf)
 phoenixClient.login(DISCORD_TOKEN);

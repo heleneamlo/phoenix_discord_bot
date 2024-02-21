@@ -3,6 +3,7 @@
 node_modules/
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 # Next.js build output
 .next
@@ -56,4 +57,6 @@ dist
 node_modules/
 
 >>>>>>> eb60982 (Update .gitignore)
+=======
+>>>>>>> 0fb5340 (wttf)
 package-lock.json
