@@ -1,4 +1,3 @@
-
 //import libraries
 const dotenv = require("dotenv").config();
 const phoenix = require("@phoenixlan/phoenix.js");
@@ -126,7 +125,8 @@ amqp.connect('amqp://phoenix:testing@127.0.0.1:5672', function (error0, connecti
         if (error1) {
             throw error1;
         }
-        let queue = 'position_changes';
+        //change this
+        let queue = "";
 
 
         channel.assertQueue(queue, {
@@ -236,19 +236,17 @@ setInterval(() => {
 
 
 async function removeAllRoles() {
-    //ENDRE TIL SERVERID
-    const guild = phoenixClient.guilds.cache.get("1057285699050680441");
-    //ENDRE TIL SERVERID
+    const guild = phoenixClient.guilds.cache.get(phoenixGuildId);
     try {
-        let crews = await Promise.all((await phoenix.Crew.getCrews()));
-        crews.forEach(async (Crew) => {
-            let allCrews = await phoenix.Crew.getCrew(Crew.uuid);
-            let readableCrew = allCrews.positions;
+        const crews = await phoenix.Crew.getCrews();
+        crews.forEach(async (crew) => {
+            const allCrews = await phoenix.Crew.getCrew(crew.uuid);
+            const readableCrew = allCrews.positions;
             readableCrew.forEach(async (position) => {
-                if (position.chief === true) {
+                if (position.chief) {
                     position.position_mappings.forEach(async (mapping) => {
                         let discordUser = await phoenix.User.getDiscordMapping(mapping.user.uuid);
-                        if (discordUser != null && discordUser.discord_id != null) {
+                        if (discordUser !== null && discordUser.discord_id !== null) {
                             let roleVar = guild.roles.cache.find(role => role.name === "Gruppeleder");
                             let member = await guild.members.fetch(discordUser.discord_id);
                             await member.roles.remove(roleVar);
@@ -273,13 +271,12 @@ async function removeAllRoles() {
 }
 
 async function updateRoles() {
-    //ENDRE TIL SERVERID
-    const guild = phoenixClient.guilds.cache.get("1057285699050680441");
-    //ENDRE TIL SERVERID
+    //change this
+    const guild = phoenixClient.guilds.cache.get(phoenixGuildId);
     let crews = await Promise.all((await phoenix.Crew.getCrews()));
-    crews.forEach(async (Crew) => {
-        let allCrews = await phoenix.Crew.getCrew(Crew.uuid);
-        let readableCrew = allCrews.positions;
+    crews.forEach(async (crew) => {
+        const allCrews = await phoenix.Crew.getCrew(crew.uuid);
+        const readableCrew = allCrews.positions;
         readableCrew.forEach(async (position) => {
             if (position.chief === true) {
                 position.position_mappings.forEach(async (mapping) => {
@@ -353,8 +350,11 @@ async function updateRoles() {
     });
 };
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 6a7e39f (lmao will be overwritten)
 //when the bot turns on
 phoenixClient.on("ready", () => {
     console.log(`Logged in as ${phoenixClient.user.tag}!`);
@@ -405,11 +405,11 @@ phoenixClient.on("messageCreate", async (message) => {
                         name: "!roles",
                         value: "Oppdaterer roller.",
                     }, {
-                        name: '!roles',
-                        value: 'Oppdaterer roller.',
+                        name: "!roles",
+                        value: "Oppdaterer roller.",
                     }, {
-                        name: '!liam',
-                        value: 'Viser den nåværende tiden i Japan',
+                        name: "!liam",
+                        value: "Viser den nåværende tiden i Japan",
                     })
                     .setTimestamp()
                     .setFooter({
@@ -487,6 +487,11 @@ phoenix.User.Oauth.setAuthState("eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJyb2xlcy
 phoenixClient.login(DISCORD_TOKEN);
 =======
 
+<<<<<<< HEAD
 
 phoenixClient.login(DISCORD_TOKEN);
 >>>>>>> 0d3d7a4 (almost finished)
+=======
+//logging in to the discord bot api with the bot token
+phoenixClient.login(DISCORD_TOKEN);
+>>>>>>> 6a7e39f (lmao will be overwritten)
