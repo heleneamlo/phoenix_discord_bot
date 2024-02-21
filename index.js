@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 //import libraries
 const dotenv = require("dotenv").config();
 const phoenix = require("@phoenixlan/phoenix.js");
@@ -45,6 +46,8 @@ const amqp = require('amqplib/callback_api');
 >>>>>>> feaea3b (jvneafkjnfakjnf)
 =======
 
+=======
+>>>>>>> 3e89525 (FUCK)
 const dotenv = require('dotenv').config();
 const phoenix = require('@phoenixlan/phoenix.js');
 const amqp = require('amqplib/callback_api');
@@ -222,6 +225,7 @@ async function removeAllRoles() {
     } catch (error) {
         console.error("an error occured while deleting roles:", error);
     }
+}
 
 
 async function updateRoles() {
@@ -471,6 +475,7 @@ phoenixClient.on("messageCreate", async (message) => {
                 break;
         }
     }
+<<<<<<< HEAD
 });
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -495,3 +500,9 @@ phoenixClient.login(DISCORD_TOKEN);
 //logging in to the discord bot api with the bot token
 phoenixClient.login(DISCORD_TOKEN);
 >>>>>>> 6a7e39f (lmao will be overwritten)
+=======
+})
+
+//logging in to the discord bot api with the bot token
+phoenixClient.login(DISCORD_TOKEN)
+>>>>>>> 3e89525 (FUCK)
