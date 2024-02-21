@@ -119,8 +119,13 @@ async function removeAllRoles() {
                 if (position.chief === true) {
                     position.position_mappings.forEach(async (mapping) => {
                         let discordUser = await phoenix.User.getDiscordMapping(mapping.user.uuid);
+<<<<<<< HEAD
                         if (discordUser != null && discordUser.discord_id != null) {
                             let roleVar = guild.roles.cache.find(role => role.name === "Gruppeleder");
+=======
+                        if (discordUser !== null && discordUser.discord_id !== null) {
+                            let roleVar = guild.roles.cache.get(process.env.GRUPPELEDER_ID);
+>>>>>>> de01492 (added implementation for getting roles by id)
                             let member = await guild.members.fetch(discordUser.discord_id);
                             await member.roles.remove(roleVar);
                         }
@@ -129,7 +134,7 @@ async function removeAllRoles() {
                     position.position_mappings.forEach(async (mapping) => {
                         let discordUser = await phoenix.User.getDiscordMapping(mapping.user.uuid);
                         if (discordUser != null && discordUser.discord_id != null) {
-                            let roleVar = guild.roles.cache.find(role => role.name === "Crew");
+                            let roleVar = guild.roles.cache.get(process.env.CREW_ID);
                             let member = await guild.members.fetch(discordUser.discord_id);
                             await member.roles.remove(roleVar);
                         }
@@ -157,7 +162,7 @@ async function updateRoles() {
                     try {
                         let discordUser = await phoenix.User.getDiscordMapping(mapping.user.uuid);
                         if (discordUser != null && discordUser.discord_id != null) {
-                            let roleVar = guild.roles.cache.find(role => role.name === "Gruppeleder");
+                            let roleVar = guild.roles.cache.get(process.env.GRUPPELEDER_ID);
                             let member = await guild.members.fetch(discordUser.discord_id);
                             await member.roles.add(roleVar);
                         }
@@ -170,7 +175,7 @@ async function updateRoles() {
                     try {
                         let discordUser = await phoenix.User.getDiscordMapping(mapping.user.uuid);
                         if (discordUser != null && discordUser.discord_id != null) {
-                            let roleVar = guild.roles.cache.find(role => role.name === "Crew");
+                            let roleVar = guild.roles.cache.get(process.env.CREW_ID);
                             let member = await guild.members.fetch(discordUser.discord_id);
                             await member.roles.add(roleVar);
                         }
