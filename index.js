@@ -1,3 +1,4 @@
+
 //import libraries
 const dotenv = require("dotenv").config();
 const phoenix = require("@phoenixlan/phoenix.js");
@@ -14,7 +15,6 @@ const {
 const {
     Client,
     GatewayIntentBits,
-<<<<<<< HEAD
     EmbedBuilder,
     Guild
 <<<<<<< HEAD
@@ -32,6 +32,7 @@ const DISCORD_TOKEN = process.env.BOT_TOKEN;
 } = require("discord.js");
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> bedd543 (Improved promise awaiting)
 =======
 =======
@@ -43,6 +44,32 @@ const phoenix = require('@phoenixlan/phoenix.js');
 const amqp = require('amqplib/callback_api');
 >>>>>>> 4149b6e (jvneafkjnfakjnf)
 >>>>>>> feaea3b (jvneafkjnfakjnf)
+=======
+
+const dotenv = require('dotenv').config();
+const phoenix = require('@phoenixlan/phoenix.js');
+const amqp = require('amqplib/callback_api');
+const {
+    UTCDate
+} = require("@date-fns/utc");
+const {
+    addHours,
+    subMonths,
+    differenceInMilliseconds,
+    differenceInHours
+} = require("date-fns");
+const {
+    Client,
+    GatewayIntentBits,
+    EmbedBuilder,
+    Guild
+} = require('discord.js');
+
+phoenix.init("https://api.test.phoenixlan.no");
+phoenix.User.Oauth.setAuthState("eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJhZG1pbiIsInRpY2tldF93aG9sZXNhbGUiLCJjaGllZjo0ZTUxYzdhYS0xYjJmLTQzMzUtOWEzNC1kMDZmYTU0MjcwMDYiLCJtZW1iZXIiLCJ1c2VyOmZlNmRkZjU5LTc3NWQtNDI1Yi1hNjBmLTc5YTU1ZTdiZDE1YyIsImNoaWVmIiwidGlja2V0X2J5cGFzc190aWNrZXRzYWxlX3N0YXJ0X3Jlc3RyaWN0aW9uIl0sImZsYWciOiJQSE9FTklYe0pXVFNfQVJFX0FXRVNPTUV9Iiwic3ViIjoiZmU2ZGRmNTktNzc1ZC00MjViLWE2MGYtNzlhNTVlN2JkMTVjIiwiaWF0IjoxNjk0Nzk4NTQ0LCJleHAiOjE2OTQ4MDIxNDR9.Y1fx1ndk9iDVjEPC9vDt4UZxz7V1ar4sqALxXD_aW0JHojQ6ROFsdbNquIt35MWPCmvbjHGZkWNNcmRfWbdHNQ", "saphamcWOBXgsVaOuiizRsmQvsgiUFSLhBVeluMW");
+
+
+>>>>>>> 0d3d7a4 (almost finished)
 
 //set time variables
 let halfHour = 1800000;
@@ -61,7 +88,8 @@ const timeBeforeNextEventRemove = parseInt(process.env.REMOVE_MONTHS);
 let phoenixGuildId = process.env.GUILD_ID;
 //set the discord token variable with the token from .env file
 const DISCORD_TOKEN = process.env.BOT_TOKEN;
-<<<<<<< HEAD
+
+
 //change this to the rabbitmq address and port
 amqp.connect(process.env.RABBITMQ_CONNECT_LINK, function (error0, connection) {
     if (error0) {
@@ -88,20 +116,31 @@ amqp.connect(process.env.RABBITMQ_CONNECT_LINK, function (error0, connection) {
         });
 
     });
-=======
-amqp.connect('amqp://phoenix:testing@127.0.0.1:5672', function(error0, connection) {
-  if (error0) {
-    throw error0;
-  }
-  connection.createChannel(function(error1, channel) {
-    if (error1) {
-      throw error1;
+
+amqp.connect('amqp://phoenix:testing@127.0.0.1:5672', function (error0, connection) {
+    if (error0) {
+        throw error0;
+
     }
-    var queue = 'position_changes';
+    connection.createChannel(function (error1, channel) {
+        if (error1) {
+            throw error1;
+        }
+        let queue = 'position_changes';
 
 
-    channel.assertQueue(queue, {
-      durable: true
+        channel.assertQueue(queue, {
+            durable: true,
+        });
+
+        channel.consume(queue, async function (msg) {
+            console.log(msg.content.toString());
+            removeAllRoles();
+            updateRoles();
+        }, {
+            noAck: true,
+        });
+
     });
 
     channel.consume(queue, function(msg) {
@@ -113,7 +152,7 @@ amqp.connect('amqp://phoenix:testing@127.0.0.1:5672', function(error0, connectio
     });
 
   });
->>>>>>> 4149b6e (jvneafkjnfakjnf)
+
 });
 const phoenixClient = new Client({
     intents: [
@@ -124,7 +163,6 @@ const phoenixClient = new Client({
     ],
 });
 
-<<<<<<< HEAD
 async function handleRoleRemoval() {
     const now = new UTCDate();
     const events = await phoenix.getEvents();
@@ -185,14 +223,95 @@ async function removeAllRoles() {
         console.error("an error occured while deleting roles:", error);
     }
 
-=======
+
 async function updateRoles() {
     const targetGuild = phoenixClient.guilds.cache.first();
     let crews = await Promise.all((await phoenix.Crew.getCrews()))
     crews.forEach(async (Crew) => {
         let allCrews = await phoenix.Crew.getCrew(Crew.uuid) })
->>>>>>> 4149b6e (jvneafkjnfakjnf)
 }
+setInterval(() => {
+    handleRoleRemoval();
+}, 8.64e+7); // 1 day
+
+
+async function removeAllRoles() {
+    //ENDRE TIL SERVERID
+    const guild = phoenixClient.guilds.cache.get("1057285699050680441");
+    //ENDRE TIL SERVERID
+    try {
+        let crews = await Promise.all((await phoenix.Crew.getCrews()));
+        crews.forEach(async (Crew) => {
+            let allCrews = await phoenix.Crew.getCrew(Crew.uuid);
+            let readableCrew = allCrews.positions;
+            readableCrew.forEach(async (position) => {
+                if (position.chief === true) {
+                    position.position_mappings.forEach(async (mapping) => {
+                        let discordUser = await phoenix.User.getDiscordMapping(mapping.user.uuid);
+                        if (discordUser != null && discordUser.discord_id != null) {
+                            let roleVar = guild.roles.cache.find(role => role.name === "Gruppeleder");
+                            let member = await guild.members.fetch(discordUser.discord_id);
+                            await member.roles.remove(roleVar);
+                        }
+                    })
+                } else {
+                    position.position_mappings.forEach(async (mapping) => {
+                        let discordUser = await phoenix.User.getDiscordMapping(mapping.user.uuid);
+                        if (discordUser != null && discordUser.discord_id != null) {
+                            let roleVar = guild.roles.cache.find(role => role.name === "Crew");
+                            let member = await guild.members.fetch(discordUser.discord_id);
+                            await member.roles.remove(roleVar);
+                        }
+                    })
+                }
+            });
+        });
+    } catch (error) {
+        console.error("an error occured while deleting roles:", error);
+    }
+
+}
+
+async function updateRoles() {
+    //ENDRE TIL SERVERID
+    const guild = phoenixClient.guilds.cache.get("1057285699050680441");
+    //ENDRE TIL SERVERID
+    let crews = await Promise.all((await phoenix.Crew.getCrews()));
+    crews.forEach(async (Crew) => {
+        let allCrews = await phoenix.Crew.getCrew(Crew.uuid);
+        let readableCrew = allCrews.positions;
+        readableCrew.forEach(async (position) => {
+            if (position.chief === true) {
+                position.position_mappings.forEach(async (mapping) => {
+                    try {
+                        let discordUser = await phoenix.User.getDiscordMapping(mapping.user.uuid);
+                        if (discordUser != null && discordUser.discord_id != null) {
+                            let roleVar = guild.roles.cache.find(role => role.name === "Gruppeleder");
+                            let member = await guild.members.fetch(discordUser.discord_id);
+                            await member.roles.add(roleVar);
+                        }
+                    } catch (error) {
+                        console.error("an error occured while editing roles:", error);
+                        console.log()
+                    }
+                })
+            } else {
+                position.position_mappings.forEach(async (mapping) => {
+                    try {
+                        let discordUser = await phoenix.User.getDiscordMapping(mapping.user.uuid);
+                        if (discordUser != null && discordUser.discord_id != null) {
+                            let roleVar = guild.roles.cache.find(role => role.name === "Crew");
+                            let member = await guild.members.fetch(discordUser.discord_id);
+                            await member.roles.add(roleVar);
+                        }
+                    } catch (error) {
+                        console.error("an error occured while editing roles:", error);
+                    }
+                })
+            }
+        });
+    });
+};
 
 async function updateRoles() {
     //change this
@@ -291,10 +410,7 @@ phoenixClient.on("messageCreate", async (message) => {
                     }, {
                         name: '!liam',
                         value: 'Viser den nåværende tiden i Japan',
-                    }, {
-                        name: 'REDACTED',
-                        value: 'REDACTED',
-                    }, )
+                    })
                     .setTimestamp()
                     .setFooter({
                         text: "Phoenix bot !help",
@@ -350,16 +466,13 @@ phoenixClient.on("messageCreate", async (message) => {
             case 'flag':
                 message.reply('PHOENIX{D1SCO_B0T}');
                 break;
-            case 'liam':
-                let liam_tid = new Date().toLocaleTimeString("nb-NO", { timeZone: "JST"})
-                message.reply("Liam bor i Japan som ligger 8 timer før Norge, tiden i japan er nå: " + liam_tid)
-                break;
             default:
                 message.reply("Dette var en kommando som ikke funket, se om du skrev den riktig eller skriv !help for å se alle kommandoer");
                 break;
         }
     }
 });
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 <<<<<<< HEAD
@@ -372,3 +485,8 @@ phoenix.init("https://api.test.phoenixlan.no");
 phoenix.User.Oauth.setAuthState("eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJ0aWNrZXRfd2hvbGVzYWxlIiwibWVtYmVyIiwidXNlcjplNWQ1ZGMxOC1kZjk5LTRkMWYtYjQ0OC1iYWEyYTg5ZWY3MGUiLCJhZG1pbiIsImNoaWVmOjIzODZkMGE1LTdjYTMtNGVlOS1iNTExLTI2MTNhMjE2ZWZhOSIsImNoaWVmIiwidGlja2V0X2J5cGFzc190aWNrZXRzYWxlX3N0YXJ0X3Jlc3RyaWN0aW9uIl0sImZsYWciOiJQSE9FTklYe0pXVFNfQVJFX0FXRVNPTUV9Iiwic3ViIjoiZTVkNWRjMTgtZGY5OS00ZDFmLWI0NDgtYmFhMmE4OWVmNzBlIiwiaWF0IjoxNjkyNjM1OTU5LCJleHAiOjE2OTI2Mzk1NTl9.Bz_Bjg9tFaaJdFHu6fLWMZh7r9eM0EstxIoaIQAAyKw2fdOpvRdh5fQ9rRu883KYAi2yNYn93WSFb8UmW4IfmQ", "FqzfMCdgrsKlMZKLgQhpSUkOWjxCQVLwNATzAlMR");
 >>>>>>> feaea3b (jvneafkjnfakjnf)
 phoenixClient.login(DISCORD_TOKEN);
+=======
+
+
+phoenixClient.login(DISCORD_TOKEN);
+>>>>>>> 0d3d7a4 (almost finished)

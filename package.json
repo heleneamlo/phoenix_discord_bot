@@ -9,8 +9,14 @@
   "author": "phoenix lan",
   "license": "ISC",
   "dependencies": {
+<<<<<<< HEAD
     "@phoenixlan/phoenix.js": "^2.29.0",
+=======
+    "@date-fns/utc": "^1.0.0",
+    "@phoenixlan/phoenix.js": "^2.30.0",
+>>>>>>> f644295 (almost finished)
     "amqplib": "^0.10.3",
+    "date-fns": "^2.30.0",
     "discord.js": "^14.12.1",
     "dotenv": "^16.3.1"
   }
