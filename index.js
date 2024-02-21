@@ -33,9 +33,13 @@ const DISCORD_TOKEN = process.env.BOT_TOKEN;
 >>>>>>> bedd543 (Improved promise awaiting)
 =======
 
-//set a variable to half an hour
+//set time variables
 let halfHour = 1800000;
+<<<<<<< HEAD
 >>>>>>> 8c7539e (Update index.js)
+=======
+let oneDay = 86400000;
+>>>>>>> f820de5 (Update index.js)
 //initialise the api
 phoenix.init(process.env.INIT_URL);
 //change this to token from login in the api
@@ -98,7 +102,7 @@ async function handleRoleRemoval() {
 }
 setInterval(() => {
     handleRoleRemoval();
-}, 8.64e+7); // 1 day
+}, oneDay);
 
 
 async function removeAllRoles() {
