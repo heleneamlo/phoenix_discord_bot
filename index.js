@@ -14,6 +14,7 @@ const {
 const {
     Client,
     GatewayIntentBits,
+<<<<<<< HEAD
     EmbedBuilder,
     Guild
 <<<<<<< HEAD
@@ -30,8 +31,18 @@ const DISCORD_TOKEN = process.env.BOT_TOKEN;
 =======
 } = require("discord.js");
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> bedd543 (Improved promise awaiting)
 =======
+=======
+=======
+    EmbedBuilder
+} = require('discord.js');
+const dotenv = require('dotenv').config();
+const phoenix = require('@phoenixlan/phoenix.js');
+const amqp = require('amqplib/callback_api');
+>>>>>>> 4149b6e (jvneafkjnfakjnf)
+>>>>>>> feaea3b (jvneafkjnfakjnf)
 
 //set time variables
 let halfHour = 1800000;
@@ -50,6 +61,7 @@ const timeBeforeNextEventRemove = parseInt(process.env.REMOVE_MONTHS);
 let phoenixGuildId = process.env.GUILD_ID;
 //set the discord token variable with the token from .env file
 const DISCORD_TOKEN = process.env.BOT_TOKEN;
+<<<<<<< HEAD
 //change this to the rabbitmq address and port
 amqp.connect(process.env.RABBITMQ_CONNECT_LINK, function (error0, connection) {
     if (error0) {
@@ -76,6 +88,32 @@ amqp.connect(process.env.RABBITMQ_CONNECT_LINK, function (error0, connection) {
         });
 
     });
+=======
+amqp.connect('amqp://phoenix:testing@127.0.0.1:5672', function(error0, connection) {
+  if (error0) {
+    throw error0;
+  }
+  connection.createChannel(function(error1, channel) {
+    if (error1) {
+      throw error1;
+    }
+    var queue = 'position_changes';
+
+
+    channel.assertQueue(queue, {
+      durable: true
+    });
+
+    channel.consume(queue, function(msg) {
+        console.log(" [x] Received %s", msg.content.toString());
+        let messageuuid = msg.content.toString().split(' ');
+        console.log(messageuuid);
+    }, {
+        noAck: true
+    });
+
+  });
+>>>>>>> 4149b6e (jvneafkjnfakjnf)
 });
 const phoenixClient = new Client({
     intents: [
@@ -86,6 +124,7 @@ const phoenixClient = new Client({
     ],
 });
 
+<<<<<<< HEAD
 async function handleRoleRemoval() {
     const now = new UTCDate();
     const events = await phoenix.getEvents();
@@ -146,6 +185,13 @@ async function removeAllRoles() {
         console.error("an error occured while deleting roles:", error);
     }
 
+=======
+async function updateRoles() {
+    const targetGuild = phoenixClient.guilds.cache.first();
+    let crews = await Promise.all((await phoenix.Crew.getCrews()))
+    crews.forEach(async (Crew) => {
+        let allCrews = await phoenix.Crew.getCrew(Crew.uuid) })
+>>>>>>> 4149b6e (jvneafkjnfakjnf)
 }
 
 async function updateRoles() {
@@ -307,10 +353,15 @@ phoenixClient.on("messageCreate", async (message) => {
         }
     }
 });
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 
 //logging in to the discord bot api with the bot token
 =======
 >>>>>>> 0fb5340 (wttf)
+=======
+phoenix.init("https://api.test.phoenixlan.no");
+phoenix.User.Oauth.setAuthState("eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJ0aWNrZXRfd2hvbGVzYWxlIiwibWVtYmVyIiwidXNlcjplNWQ1ZGMxOC1kZjk5LTRkMWYtYjQ0OC1iYWEyYTg5ZWY3MGUiLCJhZG1pbiIsImNoaWVmOjIzODZkMGE1LTdjYTMtNGVlOS1iNTExLTI2MTNhMjE2ZWZhOSIsImNoaWVmIiwidGlja2V0X2J5cGFzc190aWNrZXRzYWxlX3N0YXJ0X3Jlc3RyaWN0aW9uIl0sImZsYWciOiJQSE9FTklYe0pXVFNfQVJFX0FXRVNPTUV9Iiwic3ViIjoiZTVkNWRjMTgtZGY5OS00ZDFmLWI0NDgtYmFhMmE4OWVmNzBlIiwiaWF0IjoxNjkyNjM1OTU5LCJleHAiOjE2OTI2Mzk1NTl9.Bz_Bjg9tFaaJdFHu6fLWMZh7r9eM0EstxIoaIQAAyKw2fdOpvRdh5fQ9rRu883KYAi2yNYn93WSFb8UmW4IfmQ", "FqzfMCdgrsKlMZKLgQhpSUkOWjxCQVLwNATzAlMR");
+>>>>>>> feaea3b (jvneafkjnfakjnf)
 phoenixClient.login(DISCORD_TOKEN);
