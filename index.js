@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+//import libraries
+>>>>>>> a3bf2ba (Create index.js)
 const dotenv = require('dotenv').config();
 const phoenix = require('@phoenixlan/phoenix.js');
 const amqp = require('amqplib/callback_api');
@@ -16,6 +20,7 @@ const {
     EmbedBuilder,
     Guild
 } = require('discord.js');
+<<<<<<< HEAD
 
 phoenix.init("https://api.test.phoenixlan.no");
 //change this
@@ -25,6 +30,19 @@ const timeBeforeNextEventRemove = 2;
 
 const DISCORD_TOKEN = process.env.BOT_TOKEN;
 //change this
+=======
+//initialise the api
+phoenix.init("https://api.test.phoenixlan.no");
+//change this to token from login in the api
+phoenix.User.Oauth.setAuthState("", "");
+//variable that controls the months before the next event crew roles should be removed
+const timeBeforeNextEventRemove = 2;
+//change this, guild id to ensure proper guild selection
+let phoenixGuildId = "";
+//set the discord token variable with the token from .env file
+const DISCORD_TOKEN = process.env.BOT_TOKEN;
+//change this to the rabbitmq address and port
+>>>>>>> a3bf2ba (Create index.js)
 amqp.connect('amqp://', function (error0, connection) {
     if (error0) {
         throw error0;
@@ -80,9 +98,13 @@ setInterval(() => {
 
 
 async function removeAllRoles() {
+<<<<<<< HEAD
     //ENDRE TIL SERVERID
     const guild = phoenixClient.guilds.cache.get("1057285699050680441");
     //ENDRE TIL SERVERID
+=======
+    const guild = phoenixClient.guilds.cache.get(phoenixGuildId);
+>>>>>>> a3bf2ba (Create index.js)
     try {
         let crews = await Promise.all((await phoenix.Crew.getCrews()));
         crews.forEach(async (Crew) => {
@@ -118,7 +140,11 @@ async function removeAllRoles() {
 
 async function updateRoles() {
     //change this
+<<<<<<< HEAD
     const guild = phoenixClient.guilds.cache.get("1057285699050680441");
+=======
+    const guild = phoenixClient.guilds.cache.get(phoenixGuildId);
+>>>>>>> a3bf2ba (Create index.js)
     let crews = await Promise.all((await phoenix.Crew.getCrews()));
     crews.forEach(async (Crew) => {
         let allCrews = await phoenix.Crew.getCrew(Crew.uuid);
@@ -157,7 +183,11 @@ async function updateRoles() {
 };
 
 
+<<<<<<< HEAD
 
+=======
+//when the bot turns on
+>>>>>>> a3bf2ba (Create index.js)
 phoenixClient.on('ready', () => {
     console.log(`Logged in as ${phoenixClient.user.tag}!`);
     updateRoles();
@@ -167,22 +197,38 @@ phoenixClient.on('ready', () => {
     }, 1800000);
 });
 
+<<<<<<< HEAD
+=======
+//when someone joins the server
+>>>>>>> a3bf2ba (Create index.js)
 phoenixClient.on('guildMemberAdd', member => {
     updateRoles();
 })
 
+<<<<<<< HEAD
 
+=======
+//when there is a new message in the server
+>>>>>>> a3bf2ba (Create index.js)
 phoenixClient.on('messageCreate', async (message) => {
     if (message.author.bot) return;
     if (message.content.includes("chief")) {
         message.channel.send("det heter gruppeleder! :rage:");
     };
     const prefix = '!';
+<<<<<<< HEAD
 
     if (message.content.startsWith(prefix)) {
         const args = message.content.slice(prefix.length).trim().split(/ +/);
         const command = args.shift().toLowerCase();
 
+=======
+    //check if message is a command
+    if (message.content.startsWith(prefix)) {
+        const args = message.content.slice(prefix.length).trim().split(/ +/);
+        const command = args.shift().toLowerCase();
+        //handle commands
+>>>>>>> a3bf2ba (Create index.js)
         switch (command) {
             case 'help':
                 const helpEmbed = new EmbedBuilder()
@@ -208,10 +254,18 @@ phoenixClient.on('messageCreate', async (message) => {
                 });
                 break;
             case 'roles':
+<<<<<<< HEAD
                 //change this
                 const guild = phoenixClient.guilds.cache.get("1057285699050680441");
                 let role = message.member.roles.cache.find(role => role.name === "Administrasjon")
                 if(role){
+=======
+                //only runs if user has role "Administrasjon" in the discord server
+                const guild = phoenixClient.guilds.cache.get(phoenixGuildId);
+                let role = message.member.roles.cache.find(role => role.name === "Administrasjon")
+                if(role){
+                    //removes roles and adds them again to make sure that if someone is removed from the crew, it will remove them first, then add all the people that are supposed to have roles
+>>>>>>> a3bf2ba (Create index.js)
                     await removeAllRoles();
                     await updateRoles();
                     message.reply('roller oppdatert');
@@ -221,6 +275,10 @@ phoenixClient.on('messageCreate', async (message) => {
                         break;
                 };
             case 'liam':
+<<<<<<< HEAD
+=======
+                //getting time in japan, where liam lives
+>>>>>>> a3bf2ba (Create index.js)
                 let liam_tid = new Date().toLocaleTimeString("nb-NO", {
                     timeZone: "JST"
                 });
@@ -233,5 +291,9 @@ phoenixClient.on('messageCreate', async (message) => {
     }
 });
 
+<<<<<<< HEAD
 
+=======
+//logging in to the discord bot api with the bot token
+>>>>>>> a3bf2ba (Create index.js)
 phoenixClient.login(DISCORD_TOKEN);
